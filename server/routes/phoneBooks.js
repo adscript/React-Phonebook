@@ -63,5 +63,23 @@ router.put('/:id', function (req, res){
     })
 })
 
+router.post('/search', function (req, res){
+    let filter = {};
+    req.body.name ? filter.name = req.body.name : '';
+    req.body.phoneNumber ? filter.phoneNumber = req.body.phoneNumber : '';
+    PhoneBook.find(filter)
+    .then(item => {
+        res.json({
+            status: 'SUCCESS',
+            pbData: item
+        })
+    }).catch(err => {
+        res.json({
+            status: 'FAILED',
+            message: err
+        })
+    })
+})
+
 
 module.exports = router;
