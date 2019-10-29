@@ -21,8 +21,8 @@
                 <h1>Phonebook Apps</h1>
             </div>
             <div class="card-body">
-                <button type="button" class="btn btn-dark mb-4 mr-2"><i class="fas fa-plus"></i> Add</button>
-                <button type="button" class="btn btn-outline-dark mb-4"> <i class="fas fa-search"></i> Search</button>
+
+                <button type="button" class="btn btn-outline-dark mb-4"> <i class="fas fa-plus"></i> Add</button>
                 <div class="card mb-3 mr-5">
                     <h5 class="card-header">Add New Contact</h5>
                     <div class="card-body">
@@ -56,36 +56,13 @@
                     </div>
                 </div>
 
-                <div class="card mb-3 mr-5">
-                    <h5 class="card-header">Search Contact</h5>
-                    <div class="card-body">
-                        <form class="form-row">
-                            <div class="form-group col-md-4">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1"><i
-                                                class="fas fa-user"></i></span>
-                                    </div>
-                                    <input type="text" class="form-control" placeholder="Username" aria-label="Name"
-                                        aria-describedby="basic-addon1">
-                                </div>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon2"><i
-                                                class="fas fa-phone"></i></span>
-                                    </div>
-                                    <input type="tel" class="form-control" id="addNumber" pattern="08[0-9]{8,11}"
-                                        placeholder="Phone Number" aria-label="Phone Number"
-                                        aria-describedby="basic-addon2">
-                                </div>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <button type="button" class="btn btn-info mr-2"><i class="fas fa-search"></i></button>
-                                <button type="button" class="btn btn-danger"> <i class="fas fa-times"></i></button>
-                            </div>
-                        </form>
+                <div class="col-4">
+                    <label class="sr-only" for="inlineFormInputGroup">Search ...</label>
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Search ...">
+                        <div class="input-group-append">
+                            <div class="input-group-text"><i class="fas fa-search"></i></div>
+                        </div>
                     </div>
                 </div>
 
