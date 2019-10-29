@@ -145,7 +145,7 @@ const contacts = (state = [], action) => {
             return state.map(
                 item => ({
                     ...item,
-                    isVisible: (item.name.includes(action.value) || item.phoneNumber.includes(action.value))
+                    isVisible: (item.name.toLowerCase().includes(action.value) || item.phoneNumber.includes(action.value))
                 })
             )
         
