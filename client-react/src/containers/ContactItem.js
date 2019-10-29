@@ -27,7 +27,7 @@ function ContactItem(props) {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     editON: () => dispatch(editON(ownProps.contacts.id)),
-    deleteContact: () => dispatch(deleteContact(ownProps.contacts.id)),
+    deleteContact: () => dispatch(deleteContact(ownProps.contacts.id, ownProps.contacts.name, ownProps.contacts.phoneNumber)),
     resendContact: () => dispatch(resendContact(ownProps.contacts.id, ownProps.contacts.name, ownProps.contacts.phoneNumber))
 });
 
