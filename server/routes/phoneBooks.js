@@ -18,8 +18,8 @@ router.get('/', function (req, res) {
 })
 
 router.post('/', function (req, res) {
-    let { name, phoneNumber } = req.body;
-    PhoneBook.create({ name, phoneNumber })
+    let {id, name, phoneNumber } = req.body;
+    PhoneBook.create({ id, name, phoneNumber })
         .then(pbItem => {
             res.json({
                 status: 'SUCCESS',
@@ -51,24 +51,8 @@ router.delete('/:id', function (req, res) {
 router.put('/:id', function (req, res){
     PhoneBook.findOneAndUpdate({ id: Number(req.params.id) }, { name: req.body.name, phoneNumber: req.body.phoneNumber })
     .then(item => {
-        res.json({
-            status: 'SUCCESS',
-            pbData: item
-        })
-    }).catch(err => {
-        res.json({
-            status: 'FAILED',
-            message: err
-        })
-    })
-})
-
-router.post('/search', function (req, res){
-    let filter = {};
-    req.body.name ? filter.name = req.body.name : '';
-    req.body.phoneNumber ? filter.phoneNumber = req.body.phoneNumber : '';
-    PhoneBook.find(filter)
-    .then(item => {
+        item.name = req.body.name;
+        item.phoneNumber = req.body.phoneNumber;
         res.json({
             status: 'SUCCESS',
             pbData: item
