@@ -30,15 +30,53 @@ const sortContacts = (currObj, nextObj) => {
 }
 
 const contacts = (state = [], action) => {
-    let { type, contacts } = action;
+    let { type, id, name, phoneNumber, contacts, contact } = action;
     switch (type) {
         case LOAD_CONTACT_SUCCESS:
             return contacts.map(
                 item => ({
                     ...item,
                     sent: true,
-                    editForm: false
+                    onEdit: false
                 })).sort(sortContacts);
+
+        case EDIT_ON:
+            return state.map(
+                item => ({
+                    ...item,
+                    ...(item.id === id && { onEdit: true })
+                })
+            )
+
+        case EDIT_OFF:
+            return state.map(
+                item => ({
+                    ...item,
+                    ...(item.id === id && { onEdit: false })
+                })
+            )
+
+        case EDIT_CONTACT_SUCCESS:
+            return state.map(
+                item => ({
+                    ...item,
+                    ...(item.id === contact.id && 
+                    {   onEdit: false, 
+                        name: contact.name, 
+                        phoneNumber : contact.phoneNumber, 
+                        sent: true 
+                    })
+                })
+            ).sort(sortContacts)
+
+        case EDIT_CONTACT_FAILURE:
+            return state.map(
+                item => ({
+                    ...item,
+                    ...(item.id === id && { onEdit: false, sent: false })
+                })
+            )
+
 
         // case ADD_CONTACT:
         //     return [
@@ -64,7 +102,7 @@ const contacts = (state = [], action) => {
         //         sent: (item.id !== id),
         //         editForm: false
         //     }))
-        
+
         // case EDIT_CONTACT:
 
         case LOAD_CONTACT_FAILURE:
