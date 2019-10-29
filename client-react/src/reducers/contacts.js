@@ -5,8 +5,6 @@ import {
     ADD_CONTACT,
     ADD_CONTACT_SUCCESS,
     ADD_CONTACT_FAILURE,
-    ADD_ON,
-    ADD_OFF,
 
     DELETE_CONTACT,
     DELETE_CONTACT_SUCCESS,
@@ -17,6 +15,9 @@ import {
     EDIT_CONTACT_FAILURE,
     EDIT_ON,
     EDIT_OFF,
+
+    SEARCH_CONTACT,
+    SEARCH_RESET
 
 } from '../constants/actionTypes'
 
@@ -37,7 +38,8 @@ const contacts = (state = [], action) => {
                 item => ({
                     ...item,
                     sent: true,
-                    onEdit: false
+                    onEdit: false,
+                    isVisible: true
                 })).sort(sortContacts);
 
         case EDIT_ON:
@@ -56,54 +58,104 @@ const contacts = (state = [], action) => {
                 })
             )
 
+        case EDIT_CONTACT:
+            return state.map(
+                item => ({
+                    ...item,
+                    ...(item.id === id &&
+                        {
+                            onEdit: false,
+                            name: name,
+                            phoneNumber: phoneNumber,
+                            sent: true
+                        })
+                })
+            )
+
         case EDIT_CONTACT_SUCCESS:
             return state.map(
                 item => ({
                     ...item,
-                    ...(item.id === contact.id && 
-                    {   onEdit: false, 
-                        name: contact.name, 
-                        phoneNumber : contact.phoneNumber, 
-                        sent: true 
-                    })
+                    ...(item.id === contact.id &&
+                        {
+                            onEdit: false,
+                            name: contact.name,
+                            phoneNumber: contact.phoneNumber,
+                            sent: true
+                        })
                 })
-            ).sort(sortContacts)
+            )
 
         case EDIT_CONTACT_FAILURE:
             return state.map(
                 item => ({
                     ...item,
-                    ...(item.id === id && { onEdit: false, sent: false })
+                    ...(item.id === id &&
+                        {
+                            name, phoneNumber,
+                            onEdit: false
+                        })
                 })
             )
 
+        case DELETE_CONTACT:
+            return state.filter(
+                item => { return (item.id !== id) }
+            )
 
-        // case ADD_CONTACT:
-        //     return [
-        //         ...state,
-        //         {
-        //             id, name, phoneNumber,
-        //             sent: true,
-        //             editForm: false
-        //         }
-        //     ].sort(sortContacts)
+        case DELETE_CONTACT_SUCCESS:
+            return state.filter(
+                item => { return (item.id !== contact.id) }
+            )
 
-        // case ADD_CONTACT_SUCCESS:
-        //     return state.map(
-        //         item => ({
-        //             ...item,
-        //             sent: true,
-        //             editForm: false
-        //         }))
+        case DELETE_CONTACT_FAILURE:
+        case ADD_CONTACT:
+            return [
+                ...state,
+                {
+                    id, name, phoneNumber,
+                    sent: true,
+                    onEdit: false,
+                    isVisible: true
+                }
+            ].sort(sortContacts)
 
-        // case ADD_CONTACT_FAILURE:
-        //     return state.map(item => ({
-        //         ...item,
-        //         sent: (item.id !== id),
-        //         editForm: false
-        //     }))
+        case ADD_CONTACT_SUCCESS:
+            return state.map(
+                item => ({
+                    ...item,
+                    sent: true,
+                    onEdit: false,
+                    isVisible: true
+                }))
 
-        // case EDIT_CONTACT:
+        case ADD_CONTACT_FAILURE:
+            return state.map(
+                item => ({
+                    ...item,
+                    ...(item.id === id &&
+                        {
+                            onEdit: false,
+                            sent: false
+                        })
+                })
+            )
+        
+        case SEARCH_CONTACT:
+            return state.map(
+                item => ({
+                    ...item,
+                    isVisible: (item.name.includes(action.value) || item.phoneNumber.includes(action.value))
+                })
+            )
+        
+        case SEARCH_RESET:
+            return state.map(
+                item => ({
+                    ...item,
+                    isVisible: true
+                })
+            )
 
         case LOAD_CONTACT_FAILURE:
         default:
