@@ -131,6 +131,12 @@ export const deleteContact = (id, name, phoneNumber) => {
         dispatch(deleteContactRedux(id))
         return request.delete(`phonebooks/${id}`)
             .then(function (response) {
+                Swal.fire({
+                    title: "Deleted Successfully",
+                    timer: 1500,
+                    type: "success",
+                    showConfirmButton: false
+                });
                 dispatch(deleteContactSuccess(response.data.pbData))
             })
             .catch(function (error) {
