@@ -51,6 +51,59 @@ export const loadContact = () => {
 }
 // end load contact
 
+// start edit contact
+
+const editContactSuccess = (contact) => ({
+    type: EDIT_CONTACT_SUCCESS,
+    contact
+})
+
+const editContactFailure = (id) => ({
+    type: EDIT_CONTACT_FAILURE, id
+})
+
+const editContactRedux = (id, name, phoneNumber) => ({
+    type: EDIT_CONTACT, id, name, phoneNumber
+})
+
+export const editON = (id) => ({
+    type: EDIT_ON, id
+})
+
+export const editOFF = (id) => ({
+    type: EDIT_OFF, id
+})
+
+export const editContact = (id, name, phoneNumber) => {
+    return dispatch => {
+        dispatch(editContactRedux(id, name, phoneNumber))
+        return request.put(`phonebooks/${id}`, { name, phoneNumber })
+            .then(function (response) {
+                dispatch(editContactSuccess(response.data.pbData))
+            })
+            .catch(function (error) {
+                console.error(error);
+                dispatch(editContactFailure(id))
+            });
+    }
+}
+
+export const resendEditContact = (id, name, phoneNumber) => {
+    return dispatch => {
+        return request.put(`phonebooks/${id}`, { name, phoneNumber })
+            .then(function (response) {
+                dispatch(editContactSuccess(response.data))
+            })
+            .catch(function (error) {
+                console.error(error);
+                dispatch(editContactFailure(id))
+            });
+    }
+}
+
+// end edit contact
+
+
 // // start add contact
 // const addContactSuccess = (contact) => ({
 //     type: ADD_CONTACT_SUCCESS,
@@ -133,54 +186,3 @@ export const loadContact = () => {
 
 // //end delete contact
 
-// // start edit contact
-
-// const editContactSuccess = (contacts) => ({
-//     type: EDIT_CONTACT_SUCCESS,
-//     contacts
-// })
-
-// const editContactFailure = (message) => ({
-//     type: EDIT_CONTACT_FAILURE, message
-// })
-
-// const editContactRedux = (id, name, phoneNumber) => ({
-//     type: EDIT_CONTACT, id, name, phoneNumber
-// })
-
-// export const editON = () => ({
-//     type: EDIT_ON, formedit: 'ON'
-// })
-
-// export const editOFF = () => ({
-//     type: EDIT_OFF, formedit: 'OFF'
-// })
-
-// export const editContact = (id, name, phoneNumber) => {
-//     return dispatch => {
-//         dispatch(editContactRedux(id, name, phoneNumber))
-//         return request.put(`phonebooks/${id}`, { name, phoneNumber })
-//             .then(function (response) {
-//                 dispatch(editContactSuccess(response.data))
-//             })
-//             .catch(function (error) {
-//                 console.error(error);
-//                 dispatch(editContactFailure(id))
-//             });
-//     }
-// }
-
-// export const resendEditContact = (id, name, phoneNumber) => {
-//     return dispatch => {
-//         return request.put(`phonebooks/${id}`, { name, phoneNumber })
-//             .then(function (response) {
-//                 dispatch(editContactSuccess(response.data))
-//             })
-//             .catch(function (error) {
-//                 console.error(error);
-//                 dispatch(editContactFailure(id))
-//             });
-//     }
-// }
-
-// // end edit contact
