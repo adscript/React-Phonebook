@@ -37,13 +37,14 @@ class EditContact extends Component {
     handleSubmit(event) {
         event.preventDefault();
         let { name, phoneNumber, isValid } = this.state;
-        if (name === this.props.name && phoneNumber === this.props.phoneNumber)
+        if (name === this.props.name && phoneNumber === this.props.phoneNumber){
             this.props.onCancel();
+        }
         else if (!isValid) {
             Swal.fire({
                 title: "Update Error, Make sure the format is correct",
                 timer: 2000,
-                type: "warning",
+                type: "error",
                 showConfirmButton: false
             });
             this.props.onCancel();
@@ -98,7 +99,7 @@ class EditContact extends Component {
                 <form className="form-row" onSubmit={this.handleSubmit}>
                     <button type="submit" className="btn btn-success mr-2" id="submitEdit" onClick={() => this.handleSubmit}><i
                         className="fas fa-check"></i></button>
-                    <button type="button" className="btn btn-danger" onClick={() => this.props.onCancel}> <i className="fas fa-times"></i></button>
+                    <button type="button" className="btn btn-danger" onClick={() => this.props.onCancel()}> <i className="fas fa-times"></i></button>
                 </form>
             </td>
             </tr>
