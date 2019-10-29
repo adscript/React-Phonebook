@@ -1,20 +1,12 @@
-// ALL PROPS IN CONTACTITEM COMPONENT
-// contacts = { name, phoneNumber, id, sent}
-// index
-// status
-// editContact(id, name, phoneNumber)
-// deleteContact(id)
-
 import React from 'react';
 import { connect } from "react-redux";
-import { editON } from "../actions";
-import EditContact from './EditContact';
+import { editON, deleteContact, resendContact } from "../actions";
 
 function ContactItem(props) {
     let { name, phoneNumber, id, sent } = props.contacts;
     return (
         <tr>
-            <td scope="row">{props.index}</td>
+            <th scope="row">{props.index}</th>
             <td className="text-left">{name}</td>
             <td>{phoneNumber}</td>
             <td>
@@ -25,7 +17,7 @@ function ContactItem(props) {
                         <button type="button" className="btn btn-danger" onClick={() => props.deleteContact()}> <i className="fas fa-trash"></i></button>
                     </div>)
                     :
-                    (<button className="btn btn-warning" onClick={() => props.resendContact(name, phoneNumber, id)}>
+                    (<button className="btn btn-warning" onClick={() => props.resendContact()}>
                         Resend Request <i className="fas fa-sync-alt "></i>
                     </button>)}
             </td>
@@ -35,8 +27,8 @@ function ContactItem(props) {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     editON: () => dispatch(editON(ownProps.contacts.id)),
-    deleteContact: () => dispatch(editON(ownProps.contacts.id)),
-    resendEditRequest: () => dispatch(EditContact())
+    deleteContact: () => dispatch(deleteContact(ownProps.contacts.id)),
+    resendContact: () => dispatch(resendContact(ownProps.contacts.id, ownProps.contacts.name, ownProps.contacts.phoneNumber))
 });
 
 export default connect(
