@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { loadContact } from '../actions'
 import EditContact from './EditContact';
-import ContactItem from './ContactItem';
+import ContactItem from '../containers/ContactItem';
 
 class ContactTable extends Component {
 
@@ -12,11 +12,12 @@ class ContactTable extends Component {
 
     render() {
         const nodes = this.props.contacts.map((item, index) => {
-            console.log(item)
             return (
+                    item.isVisible ?
                     item.onEdit ?
                     <EditContact key={index} contacts={item} index={index + 1} /> : 
                     <ContactItem key={index} contacts={item} index={index + 1} />
+                    : ''
             )
         })
 
@@ -30,7 +31,7 @@ class ContactTable extends Component {
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className="scrollable" style={{ maxHeight: '40vh', overflowY: 'auto' }}>
                     {nodes}
                 </tbody>
             </table>
