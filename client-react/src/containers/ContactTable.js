@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import ContactItem from '../components/ContactItem';
 import { connect } from 'react-redux';
 import { loadContact } from '../actions'
+import EditContact from './EditContact';
+import ContactItem from './ContactItem';
 
 class ContactTable extends Component {
 
@@ -11,9 +12,14 @@ class ContactTable extends Component {
 
     render() {
         const nodes = this.props.contacts.map((item, index) => {
-            return (<ContactItem key={index} contacts={item} index={index + 1} />)
+            console.log(item)
+            return (
+                    item.onEdit ?
+                    <EditContact key={index} contacts={item} index={index + 1} /> : 
+                    <ContactItem key={index} contacts={item} index={index + 1} />
+            )
         })
-        
+
         return (
             <table className="table">
                 <thead className="thead-dark">
